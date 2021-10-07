@@ -27,11 +27,9 @@ def get_dot_array(diameter: int, pitch: int, btm_left_corner: tuple, top_right_c
     top_right_corner    = tuple(i*1000 for i in top_right_corner)
     
     # Convenience variables for calculating hexagonal grid centres
-    sin30 = 0.5
-    cos60 = 0.5
-    psin60 = int(np.round(pitch*sin30, 0))
-    pcos60 = int(np.round(pitch*cos60, 0))
-
+    sin60 = np.sqrt(3)/2
+    psin60 = int(np.round(pitch*sin60, 0))
+    
     # Counter variables
     x, y = btm_left_corner
     row_counter = 1
@@ -41,13 +39,13 @@ def get_dot_array(diameter: int, pitch: int, btm_left_corner: tuple, top_right_c
     while y < top_right_corner[1]:
         x = btm_left_corner[0]
         if row_counter % 2 == 0:
-            x += psin60
+            x = psin60
         while x < top_right_corner[0]:
             # Apply all filter functions
             if all([filter_func(x, y, diameter) for filter_func in filter_functions]):
                 dot_array.append((x,y, diameter))
-            x += pitch
-        y += pcos60
+            x += 2*psin60
+        y += pitch/2
         row_counter += 1
 
     return dot_array
