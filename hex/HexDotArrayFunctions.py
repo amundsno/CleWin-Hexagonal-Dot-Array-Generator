@@ -39,7 +39,7 @@ def get_dot_array(diameter: int, pitch: int, btm_left_corner: tuple, top_right_c
     while y < top_right_corner[1]:
         x = btm_left_corner[0]
         if row_counter % 2 == 0:
-            x = psin60
+            x += psin60
         while x < top_right_corner[0]:
             # Apply all filter functions
             if all([filter_func(x, y, diameter) for filter_func in filter_functions]):
