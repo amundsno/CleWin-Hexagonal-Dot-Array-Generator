@@ -93,15 +93,20 @@ class CleHexArr:
                 
         if not readpath:
             readpath = writepath
-        
-        try:
-            if not use_blank:
-                with open(readpath, "r") as file:
-                    read_content = file.read()
-            else:
-                read_content = BLANK_CONTENT
-        except FileNotFoundError:
-            read_content = BLANK_CONTENT
+        else:   
+            try:
+                if not use_blank:
+                    with open(readpath, "r") as file:
+                        read_content = file.read()
+                else:
+                    read_content = BLANK_CONTENT
+            except FileNotFoundError as e:
+                print('==============================================================================')
+                print('ERROR! File not found!')
+                print(f'Could not find readpath: {readpath}')
+                print('Make sure the correct path is given, or use readpath=\'\' to use a blank file.')
+                print('==============================================================================')
+                exit()
         
         cif_hexarr_content = f'L {layer};\n'
         for i, arr in enumerate(self.arrays):
