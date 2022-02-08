@@ -20,7 +20,7 @@ Refer to the [README.md](https://github.com/amundsno/CleWin-Hexagonal-Dot-Array-
 >>> CleHexArr.write_array(
 ...     circle_array,
 ...     writepath = 'example.cif',
-...     readpath = 'blank.cif,
+...     readpath = 'blank.cif',
 ...     layer = 'L0'
 ... )
 """
