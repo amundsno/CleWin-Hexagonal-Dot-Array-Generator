@@ -1,13 +1,27 @@
 """
-Filter functions should take arguments:
-    - ``x``, ``y``      - dot centre coordinates in ``µm``
-    - ``diameter``      - dot diameter in ``µm``
+## CleHexArr.Filters
 
-Filter functions should return: 
-    - ``True``  if the dot is to be added to the dot array, and
-    - ``False`` if not
+This module 
+contains some useful filter functions for `CleHexArr`. 
+Filter functions are passed to `generate_hexagonal_array(...)` 
+to specify where circles are allowed in the hexagonal array. 
+
+---
+
+### Filter function requirements
+
+All filter functions must be of the form:
+
+>>> filter_function(x: float, y: float, diameter: float) -> bool:
+
+Arguments:
+- ``x``, ``y``      - dot centre coordinates in ``µm``
+- ``diameter``      - dot diameter in ``µm``
+
+Return:
+- ``True``  if the dot is to be added to the dot array
+- ``False`` if not
 """
-
 import numpy as np
 
 # QUADRANTS
@@ -34,6 +48,10 @@ def is_in_top_left_quadrant(x, y, diameter) -> bool:
 def is_in_circle(X, Y, R):
     """Returns filter function that only allows circles within circle with center (X, Y) and radius R."""
     return lambda x, y, diameter : (x-X)**2 + (y-Y)**2 < (R-diameter/2)**2
+
+def is_not_in_circle(X, Y, R):
+    """Returns filter function that do not allow circles within circle with center (X, Y) and radius R."""
+    return lambda x, y, diameter : (x-X)**2 + (y-Y)**2 > (R-diameter/2)**2
 
 # RANGES
 # ------
