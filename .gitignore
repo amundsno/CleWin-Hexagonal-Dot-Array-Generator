@@ -1,6 +1,6 @@
-# .cif-files (except example template)
+# .cif-files (except blank template)
 *.cif
-!8mm_pie_design_0.cif
+!blank.cif
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
