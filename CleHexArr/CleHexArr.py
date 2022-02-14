@@ -100,13 +100,35 @@ def write_array(circles: list[float], writepath: str, readpath: str = '', layer:
     - ``readpath``          : Filepath to read from. Unspecified by deafult, assuming readpath = writepath. To use blank set equal to ``blank.cif``
     - ``layer``             : Name of layer to write to (CleWin defaults are L0, L1, L2, etc.).
     """
+    use_blank = False
     
-    if readpath == '' and os.path.exists(writepath):
-        readpath = writepath
+    if readpath == '':
+        if os.path.exists(writepath):
+            readpath = writepath
+        else:
+            use_blank = True
+    
+    if readpath == 'blank.cif':
+        use_blank = True
+    
+    if use_blank:
+        read_content = \
+            """
+            (CIF written by CleWin 4.1);
+            (1 unit = 0.001 micron);
+            (Layer names:);
+            L L0; (CleWin: 0 0 Layer 0/0f808000 0f808000);
+            (Top level:);
+            DS1 1 10;
+            9 MainSymbol;
+            DF;
+            C 1;
+            E
+            """
     else:
-        if readpath == 'blank.cif':
-            readpath = os.path.realpath(__file__).replace('\\CleHexArr\\CleHexArr.py', '\\blank.cif')
         try:
+            # Comment below can be used to get path to 'blank.cif' in repository
+            # readpath = os.path.realpath(__file__).replace('\\CleHexArr\\CleHexArr.py', '\\blank.cif')
             with open(readpath, "r") as file:
                 read_content = file.read()
         except FileNotFoundError as e:
